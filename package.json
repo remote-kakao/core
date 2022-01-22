@@ -1,6 +1,6 @@
 {
   "name": "remote-kakao",
-  "version": "2.0.0-alpha1",
+  "version": "2.0.0-alpha4",
   "main": "dist/index.js",
   "license": "MIT",
   "repository": "https://github.com/remote-kakao/remote-kakao.git",
@@ -12,10 +12,10 @@
   "author": "thoratica <me@tica.fun>",
   "devDependencies": {
     "@types/node": "^17.0.9",
-    "typed-emitter": "^2.0.0",
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "eventemitter3": "^4.0.7",
     "node-kakaolink": "^1.1.7"
   }
 }

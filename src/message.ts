@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto';
 import { RemoteInfo, Socket } from 'dgram';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'eventemitter3';
 import { KakaoLinkClient } from 'node-kakaolink';
 
 class Message {
   private socket: Socket;
-  private sessionEmitter: EventEmitter;
+  private sessionEmitter: any;
   private kakaoLink?: KakaoLinkClient;
   public remoteInfo: RemoteInfo;
   public room: string;
@@ -14,7 +14,7 @@ class Message {
   public isGroupChat: boolean;
   public getProfileImage: () => string;
 
-  constructor(data: Record<string, any>, sessionEmitter: EventEmitter, socket: Socket, remoteInfo: RemoteInfo, kakaoLink?: KakaoLinkClient) {
+  constructor(data: Record<string, any>, sessionEmitter: any, socket: Socket, remoteInfo: RemoteInfo, kakaoLink?: KakaoLinkClient) {
     this.socket = socket;
     this.sessionEmitter = sessionEmitter;
     this.remoteInfo = remoteInfo;
@@ -22,7 +22,7 @@ class Message {
     this.content = data.content;
     this.sender = data.sender;
     this.isGroupChat = data.isGroupChat;
-    this.getProfileImage = () => data.getProfileImage;
+    this.getProfileImage = () => data.profileImage;
     this.kakaoLink = kakaoLink;
   }
 

@@ -1,14 +1,14 @@
 import { createSocket } from 'dgram';
-import EventEmitter from 'events';
+import EventEmitter from 'eventemitter3';
 import { ApiClient, KakaoLinkClient } from 'node-kakaolink';
-import TypedEmitter from 'typed-emitter';
 import Message from './message';
 
-type Events = {
-  message: (message: Message) => void;
-};
+declare interface Server {
+  on(event: 'message', listener: (message: Message) => void): this;
+  on(event: string, listener: Function): this;
+}
 
-class Server extends (EventEmitter as unknown as new () => TypedEmitter<Events>) {
+class Server extends EventEmitter {
   public socket = createSocket('udp4');
   private port = 3000;
   private sessionEmitter;
@@ -44,8 +44,6 @@ class Server extends (EventEmitter as unknown as new () => TypedEmitter<Events>)
           case 'chat':
             const message = new Message(data, this.sessionEmitter, this.socket, remoteInfo, this.kakaoLink);
             this.emit('message', message);
-            // const test = encodeURIComponent(JSON.stringify({ event: 'sendText', data: { room: data.room, text: data.content } }));
-            // this.socket.send(test, 0, test.length, remoteInfo.port, remoteInfo.address);
             break;
         }
       else this.sessionEmitter.emit(session, success, data);

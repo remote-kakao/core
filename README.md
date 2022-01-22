@@ -5,7 +5,7 @@ A Node.js module to make unofficial KakaoTalk bots (within the legal scope).
 ## Example
 
 ```ts
-import Server from 'remote-kakao';
+import { Server } from 'remote-kakao';
 
 const config = {
   email: 'email@kakao.com',
