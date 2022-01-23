@@ -1,9 +1,9 @@
 {
-  "name": "remote-kakao",
-  "version": "2.0.0-alpha4",
+  "name": "@remote-kakao/core",
+  "version": "1.0.0-alpha.0",
   "main": "dist/index.js",
   "license": "MIT",
-  "repository": "https://github.com/remote-kakao/remote-kakao.git",
+  "repository": "https://github.com/remote-kakao/core.git",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --exec ts-node src/index.ts",
