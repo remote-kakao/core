@@ -1,3 +1,5 @@
+![remote](https://raw.githubusercontent.com/remote-kakao/core/main/images/banner.png)
+
 # @remote-kakao/core
 
 A Node.js module to make unofficial KakaoTalk bots (within the legal scope).
