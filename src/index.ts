@@ -1,4 +1,5 @@
 import Message from './message';
+import Plugin from './plugin';
 import Server from './server';
 
-export { Message, Server };
+export { Message, Plugin, Server };

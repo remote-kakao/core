@@ -2,8 +2,10 @@ import { createSocket } from 'dgram';
 import EventEmitter from 'eventemitter3';
 import { ApiClient, KakaoLinkClient } from 'node-kakaolink';
 import Message from './message';
+import Plugin from './plugin';
 
 declare interface Server {
+  on(event: 'ready', listener: () => void): this;
   on(event: 'message', listener: (message: Message) => void): this;
   on(event: string, listener: Function): this;
 }
@@ -13,11 +15,16 @@ class Server extends EventEmitter {
   private port = 3000;
   private sessionEmitter;
   private kakaoLink?: KakaoLinkClient;
+  private plugins: Plugin[] = [];
 
   constructor(config: { useKakaoLink?: boolean } = { useKakaoLink: false }) {
     super();
     if (config.useKakaoLink) this.kakaoLink = new KakaoLinkClient();
     this.sessionEmitter = new EventEmitter();
+  }
+
+  public usePlugin(plugin: new () => Plugin) {
+    this.plugins.push(new plugin());
   }
 
   public async start(port = 3000, kakaoLinkConfig?: { email: string; password: string; key: string; host: string }) {
