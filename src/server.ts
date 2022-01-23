@@ -24,6 +24,7 @@ class Server extends EventEmitter {
 
   public usePlugin(plugin: new () => Plugin) {
     const instance = new plugin();
+    instance.server = this;
 
     if (instance.onReady) this.on('ready', instance.onReady);
     if (instance.onMessage) this.on('message', instance.onMessage);
