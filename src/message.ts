@@ -10,9 +10,8 @@ class Message {
   public remoteInfo: RemoteInfo;
   public room: string;
   public content: string;
-  public sender: string;
+  public sender: { name: string; getProfileImage(): string };
   public isGroupChat: boolean;
-  public getProfileImage: () => string;
 
   constructor(data: Record<string, any>, sessionEmitter: any, socket: Socket, remoteInfo: RemoteInfo, kakaoLink?: KakaoLinkClient) {
     this.socket = socket;
@@ -20,9 +19,8 @@ class Message {
     this.remoteInfo = remoteInfo;
     this.room = data.room;
     this.content = data.content;
-    this.sender = data.sender;
+    this.sender = { name: data.sender, getProfileImage: () => data.profileImage };
     this.isGroupChat = data.isGroupChat;
-    this.getProfileImage = () => data.profileImage;
     this.kakaoLink = kakaoLink;
   }
 
