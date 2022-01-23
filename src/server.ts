@@ -15,7 +15,6 @@ class Server extends EventEmitter {
   private port = 3000;
   private sessionEmitter;
   private kakaoLink?: KakaoLinkClient;
-  private plugins: Plugin[] = [];
 
   constructor(config: { useKakaoLink?: boolean } = { useKakaoLink: false }) {
     super();
@@ -24,7 +23,10 @@ class Server extends EventEmitter {
   }
 
   public usePlugin(plugin: new () => Plugin) {
-    this.plugins.push(new plugin());
+    const instance = new plugin();
+
+    if (instance.onReady) this.on('ready', instance.onReady);
+    if (instance.onMessage) this.on('message', instance.onMessage);
   }
 
   public async start(port = 3000, kakaoLinkConfig?: { email: string; password: string; key: string; host: string }) {
