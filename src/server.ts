@@ -22,12 +22,11 @@ class Server extends EventEmitter {
     this.sessionEmitter = new EventEmitter();
   }
 
-  public usePlugin(plugin: new () => Plugin) {
-    const instance = new plugin();
-    instance.server = this;
+  public usePlugin(plugin: Plugin) {
+    plugin.server = this;
 
-    if (instance.onReady) this.on('ready', instance.onReady);
-    if (instance.onMessage) this.on('message', instance.onMessage);
+    if (plugin.onReady) this.on('ready', plugin.onReady);
+    if (plugin.onMessage) this.on('message', plugin.onMessage);
   }
 
   public async start(port = 3000, kakaoLinkConfig?: { email: string; password: string; key: string; host: string }) {
