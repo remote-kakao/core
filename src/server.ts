@@ -57,6 +57,8 @@ class Server extends EventEmitter {
         }
       else this.sessionEmitter.emit(session, success, data);
     });
+
+    this.emit('ready');
   }
 }
 
