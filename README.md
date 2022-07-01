@@ -4,6 +4,8 @@
 
 A Node.js module to make unofficial KakaoTalk bots (within the legal scope).
 
+[Discord Server](https://discord.gg/T9PrmtcR8a)
+
 ## Example
 
 ```ts
