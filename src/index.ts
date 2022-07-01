@@ -1,5 +1,5 @@
 import Message from './message';
-import Plugin from './plugin';
+import RKPlugin from './plugin';
 import Server from './server';
 
-export { Message, Plugin, Server };
+export { Message, RKPlugin, Server };
