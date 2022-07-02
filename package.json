@@ -10,10 +10,10 @@
   },
   "author": "thoratica <me@tica.fun>",
   "devDependencies": {
-    "@types/node": "^17.0.9",
+    "@types/node": "^18.0.0",
     "nodemon": "^2.0.18",
     "ts-node": "^10.8.1",
-    "typescript": "^4.5.4"
+    "typescript": "^4.7.4"
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",

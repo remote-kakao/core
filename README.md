@@ -10,7 +10,7 @@ remote-kakao is a Node.js module to make unofficial (& legal) KakaoTalk bots by 
 
 ## Requirements
 
-- Node.js v17+
+- Node.js v18+ (Recommended)
 - Android smartphone w/ [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) & [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot)
 - Devoted love toward cats
 

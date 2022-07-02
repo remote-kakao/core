@@ -15,7 +15,6 @@ class Server extends EventEmitter {
   public socket = createSocket('udp4');
   private port = 3000;
   private sessionEmitter;
-  private kakaoLink?: KakaoLinkClient;
   private plugins: RKPlugin[] = [];
 
   constructor() {
@@ -61,7 +60,6 @@ class Server extends EventEmitter {
               this.sessionEmitter,
               this.socket,
               remoteInfo,
-              this.kakaoLink
             );
 
             this.plugins.forEach((plugin) => {

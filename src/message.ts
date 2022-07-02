@@ -5,7 +5,6 @@ import { KakaoLinkClient } from 'node-kakaolink';
 class Message {
   private socket: Socket;
   private sessionEmitter: any;
-  private kakaoLink?: KakaoLinkClient;
   public remoteInfo: RemoteInfo;
   public room: string;
   public content: string;
@@ -17,7 +16,6 @@ class Message {
     sessionEmitter: any,
     socket: Socket,
     remoteInfo: RemoteInfo,
-    kakaoLink?: KakaoLinkClient
   ) {
     this.socket = socket;
     this.sessionEmitter = sessionEmitter;
@@ -29,7 +27,6 @@ class Message {
       getProfileImage: () => data.profileImage,
     };
     this.isGroupChat = data.isGroupChat;
-    this.kakaoLink = kakaoLink;
   }
 
   public async reply(
