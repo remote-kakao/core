@@ -16,49 +16,39 @@ class Server extends EventEmitter {
   private port = 3000;
   private sessionEmitter;
   private kakaoLink?: KakaoLinkClient;
+  private plugins: RKPlugin[] = [];
 
-  constructor(config: { useKakaoLink?: boolean } = { useKakaoLink: false }) {
+  constructor() {
     super();
-    if (config.useKakaoLink) this.kakaoLink = new KakaoLinkClient();
     this.sessionEmitter = new EventEmitter();
   }
 
-  public usePlugin(Plugin: typeof RKPlugin) {
-    const plugin = new Plugin(this);
+  public usePlugin(
+    Plugin: new (
+      server: Server,
+      options?: Record<string, any>,
+      ...args: any[]
+    ) => RKPlugin,
+    options?: Record<string, any>
+  ) {
+    const plugin = new Plugin(this, options);
 
+    if (plugin.extendServerClass) plugin.extendServerClass(this);
     if (plugin.onReady) this.on('ready', plugin.onReady);
-    if (plugin.onMessage) this.on('message', plugin.onMessage);
+    if (plugin.onMessage)
+      this.on('message', (message: Message) => {
+        if (plugin.extendMessageClass) plugin.extendMessageClass(message);
+        if (plugin.onMessage) plugin.onMessage(message);
+      });
+
+    this.plugins.push(plugin);
 
     rkLog(`Plugin ${rkColor(plugin.constructor.name)} enabled!`);
   }
 
-  public async start(
-    port = 3000,
-    kakaoLinkConfig?: {
-      email: string;
-      password: string;
-      key: string;
-      host: string;
-    }
-  ) {
+  public async start(port = 3000) {
     this.port = port;
     this.socket.bind(this.port);
-
-    if (this.kakaoLink && kakaoLinkConfig) {
-      const api = await ApiClient.create(
-        kakaoLinkConfig.key,
-        kakaoLinkConfig.host
-      );
-      const loginRes = await api.login({
-        email: kakaoLinkConfig.email,
-        password: kakaoLinkConfig.password,
-        keeplogin: true,
-      });
-      if (!loginRes.success)
-        throw new Error('Failed login to KakaoLink server!');
-
-      this.kakaoLink.login(loginRes.result);
-    }
 
     this.socket.on('message', (msg, remoteInfo) => {
       const { event, session, success, data } = JSON.parse(msg.toString());
@@ -73,6 +63,11 @@ class Server extends EventEmitter {
               remoteInfo,
               this.kakaoLink
             );
+
+            this.plugins.forEach((plugin) => {
+              if (plugin.extendMessageClass) plugin.extendMessageClass(message);
+            });
+
             this.emit('message', message);
             break;
         }

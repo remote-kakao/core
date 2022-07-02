@@ -1,43 +1,43 @@
 ![remote](https://raw.githubusercontent.com/remote-kakao/core/main/images/banner.png)
 
-# @remote-kakao/core
-
-A Node.js module to make unofficial KakaoTalk bots (within the legal scope).
+# remote-kakao
 
 [Discord Server](https://discord.gg/T9PrmtcR8a)
+
+## About
+
+remote-kakao is a Node.js module to make unofficial (& legal) KakaoTalk bots by connecting [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) with Node.js, using UDP.
+
+## Requirements
+
+- Node.js v17+
+- Android smartphone w/ [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) & [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot)
+- Devoted love toward cats
 
 ## Example
 
 ```ts
 import { Server } from '@remote-kakao/core';
 
-const config = {
-  email: 'email@kakao.com',
-  password: 'p@ssw0rd',
-  key: '00000000000000000000000000000000',
-  host: 'https://example.com',
-};
-
-const server = new Server({ useKakaoLink: true });
+const prefix = '>';
+const server = new Server();
 
 server.on('message', async (msg) => {
-  const prefix = '>';
   if (!msg.content.startsWith(prefix)) return;
 
   const args = msg.content.split(' ');
   const cmd = args.shift()?.slice(prefix.length);
 
-  switch (cmd) {
-    case 'ping': // not accurate
-      const timestamp = Date.now();
-      await msg.replyText('Pong!');
-      msg.replyText(`${Date.now() - timestamp}ms`);
-      break;
-    case 'kaling':
-      msg.replyKakaoLink({ id: 00000, args: { title: args[0], description: args[1] } });
-      break;
+  if (cmd === 'ping') {
+    /*
+      this command's result is the ping between Node.js and MessengerBot,
+      not between MessengerBot and the KakaoTalk server.
+    */
+    const timestamp = Date.now();
+    await msg.reply('Pong!');
+    msg.reply(`${Date.now() - timestamp}ms`);
   }
 });
 
-server.start(3000, config);
+server.start(3000);
 ```
