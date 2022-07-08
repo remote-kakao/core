@@ -1,6 +1,5 @@
 import { randomUUID } from 'crypto';
 import { RemoteInfo, Socket } from 'dgram';
-import { KakaoLinkClient } from 'node-kakaolink';
 
 class Message {
   private socket: Socket;

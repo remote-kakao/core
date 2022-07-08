@@ -1,6 +1,5 @@
 import { createSocket } from 'dgram';
 import EventEmitter from 'eventemitter3';
-import { ApiClient, KakaoLinkClient } from 'node-kakaolink';
 import { rkColor, rkLog } from './logger';
 import Message from './message';
 import RKPlugin from './plugin';
