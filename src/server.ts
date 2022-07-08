@@ -28,9 +28,10 @@ class Server extends EventEmitter {
       options?: Record<string, any>,
       ...args: any[]
     ) => RKPlugin,
-    options?: Record<string, any>
+    pluginOptions?: Record<string, any>,
+    enableLog: boolean = true
   ) {
-    const plugin = new Plugin(this, options);
+    const plugin = new Plugin(this, pluginOptions);
 
     if (plugin.extendServerClass) plugin.extendServerClass(this);
     if (plugin.onReady) this.on('ready', plugin.onReady);
@@ -42,7 +43,7 @@ class Server extends EventEmitter {
 
     this.plugins.push(plugin);
 
-    rkLog(`Plugin ${rkColor(plugin.constructor.name)} enabled!`);
+    if (enableLog) rkLog(`Plugin ${rkColor(plugin.constructor.name)} enabled!`);
   }
 
   public async start(port = 3000) {
@@ -59,7 +60,7 @@ class Server extends EventEmitter {
               data,
               this.sessionEmitter,
               this.socket,
-              remoteInfo,
+              remoteInfo
             );
 
             this.plugins.forEach((plugin) => {
@@ -71,8 +72,6 @@ class Server extends EventEmitter {
         }
       else this.sessionEmitter.emit(session, success, data);
     });
-
-    rkLog(`${rkColor('remote-kakao')} listening on port ${rkColor(port)}!\n`);
 
     this.emit('ready', this.port);
   }
