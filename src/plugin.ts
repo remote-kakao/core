@@ -2,7 +2,7 @@ import { Message, Server } from '.';
 import { rkPluginLog } from './logger';
 
 abstract class RKPlugin {
-  private server: Server;
+  public server: Server;
   options: Record<string, any> | undefined;
   public log: (text: any) => void;
 
