@@ -43,6 +43,8 @@ class Server extends EventEmitter {
     this.plugins.push(plugin);
 
     if (enableLog) rkLog(`Plugin ${rkColor(plugin.constructor.name)} enabled!`);
+
+    return plugin;
   }
 
   public async start(port = 3000) {
