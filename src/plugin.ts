@@ -3,7 +3,7 @@ import { rkPluginLog } from './logger';
 
 abstract class RKPlugin {
   public server: Server;
-  options: Record<string, any> | undefined;
+  options?: Record<string, any>;
   public log: (text: any) => void;
 
   constructor(server: Server, options?: Record<string, any>) {
