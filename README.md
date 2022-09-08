@@ -16,7 +16,7 @@ remote-kakao is a Node.js module to make unofficial (& legal) KakaoTalk bots by 
 
 ## [Guide (Korean)](https://cafe.naver.com/nameyee/39660)
 
-A [guide for this module](https://cafe.naver.com/nameyee/39660) is posted in the NAVER Cafe [카카오톡 봇 커뮤니티](https://cafe.naver.com/nameyee) (KakaoTalk Bot Community), in Korean.
+A [simple guide for this module](https://cafe.naver.com/nameyee/39660) is posted in the NAVER Cafe [카카오톡 봇 커뮤니티](https://cafe.naver.com/nameyee) (KakaoTalk Bot Community), in Korean.
 
 ## Example
 
