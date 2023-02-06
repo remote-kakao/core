@@ -16,7 +16,8 @@
     }
   },
   "scripts": {
-    "build": "$npm_execpath build:esm && $npm_execpath build:cjs",
+    "build": "concurrently \"$npm_execpath build:esm\" \"$npm_execpath build:cjs\"",
+    "watch": "concurrently \"$npm_execpath build:esm -w\" \"$npm_execpath build:cjs -w\"",
     "build:esm": "tsc -p tsconfig.json",
     "build:cjs": "tsc -p tsconfig-cjs.json"
   },
@@ -25,7 +26,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.11.19",
-    "tsx": "^3.12.3",
+    "concurrently": "^7.6.0",
+    "rome": "^11.0.0",
     "typescript": "^4.9.5"
   }
 }
