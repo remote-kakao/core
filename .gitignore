@@ -1,3 +1,9 @@
-node_modules
-dist
 .DS_Store
+._*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules/
+dist/
+.env
