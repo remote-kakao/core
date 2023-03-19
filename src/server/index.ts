@@ -1,9 +1,15 @@
-import type Message from 'message';
-import type { UDPServer } from './udp';
+import type { Message } from '../message';
+import { UDPServer } from './udp';
 
-export type Events<S extends UDPServer> = {
-  ready: (port: number) => Promise<void> | void;
-  chat: (data: Message<S>) => Promise<void> | void;
+export enum RKError {
+  UNKNOWN = 0,
+  TIMEOUT = 1,
+  NO_SESSION = 2,
+}
+
+export type Events<Server extends UDPServer> = {
+  ready: (port: number) => void | Promise<void>;
+  chat: (message: Message<Server>) => void | Promise<void>;
 };
 
 export * from './udp';
