@@ -61,7 +61,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<
 
       const handler = (success: boolean) => {
         if (!success) rej(RKError.UNKNOWN);
-        else res({ success });
+        else res(success);
         clearTimeout(t);
         this.#sessionEmitter.off(session, handler);
       };

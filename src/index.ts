@@ -7,7 +7,9 @@ server.once('ready', (port) => {
 });
 
 server.on('chat', async (msg) => {
-  msg.replyText('안녕하세요!');
+  if (msg.content === '>test') {
+    msg.replyText('안녕하세요!');
+  }
 });
 
 server.start();
