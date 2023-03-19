@@ -1,6 +1,6 @@
 ![remote-kakao banner](https://raw.githubusercontent.com/remote-kakao/core/main/images/banner.png)
 
-# remote-kakao@2.0.0-alpha.0
+# remote-kakao@2.0.0-alpha.2
 
 [Discord Server](https://discord.gg/T9PrmtcR8a)
 
