@@ -1,0 +1,10 @@
+!dist/
+src/
+node_modules/
+example/
+images/
+old/
+rome.json
+tsconfig-base.json
+tsconfig.json
+tsconfig-cjs.json

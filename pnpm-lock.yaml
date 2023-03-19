@@ -7,11 +7,13 @@ specifiers:
   typed-emitter: ^2.1.0
   typescript: ^5.0.2
 
+dependencies:
+  typed-emitter: 2.1.0
+
 devDependencies:
   '@types/node': 18.15.3
   concurrently: 7.6.0
   rome: 11.0.0
-  typed-emitter: 2.1.0
   typescript: 5.0.2
 
 packages:
@@ -180,7 +182,6 @@ packages:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
       tslib: 2.5.0
-    dev: true
 
   /shell-quote/1.8.0:
     resolution: {integrity: sha512-QHsz8GgQIGKlRi24yFc6a6lN69Idnx634w49ay6+jA5yFh7a1UY+4Rp6HPx/L/1zcEDPEij8cIsiqR6bQsE5VQ==}
@@ -227,13 +228,12 @@ packages:
 
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
-    dev: true
 
   /typed-emitter/2.1.0:
     resolution: {integrity: sha512-g/KzbYKbH5C2vPkaXGu8DJlHrGKHLsM25Zg9WuC9pMGfuvT+X25tZQWo5fK1BjBm8+UrVE9LDCvaY0CQk+fXDA==}
     optionalDependencies:
       rxjs: 7.8.0
-    dev: true
+    dev: false
 
   /typescript/5.0.2:
     resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
