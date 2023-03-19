@@ -51,7 +51,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<
     text: string,
     timeout: number = 60000,
   ) {
-    return new Promise<{ success: boolean }>((res, rej) => {
+    return new Promise<boolean>((res, rej) => {
       const session = randomUUID();
       const data = encodeURIComponent(
         JSON.stringify({ event: 'send_text', session, data: { roomId, text } }),
