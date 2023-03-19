@@ -23,7 +23,8 @@
     "build": "concurrently \"$npm_execpath build:esm\" \"$npm_execpath build:cjs\"",
     "watch": "concurrently \"$npm_execpath build:esm -w\" \"$npm_execpath build:cjs -w\"",
     "build:esm": "tsc -p tsconfig.json",
-    "build:cjs": "tsc -p tsconfig-cjs.json"
+    "build:cjs": "tsc -p tsconfig-cjs.json",
+    "prepublishOnly": "$npm_execpath build"
   },
   "keywords": [],
   "author": "thoratica <me@tica.fun>",
