@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "baseUrl": "./src",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
