@@ -24,6 +24,7 @@
     "watch": "concurrently \"$npm_execpath run build:esm -w\" \"$npm_execpath run build:cjs -w\"",
     "build:esm": "tsc -p tsconfig.json",
     "build:cjs": "tsc -p tsconfig-cjs.json",
+    "example": "tsx --watch example/index.ts",
     "prepublishOnly": "$npm_execpath run build"
   },
   "keywords": [],
@@ -33,6 +34,7 @@
     "@types/node": "^18.15.3",
     "concurrently": "^7.6.0",
     "rome": "^11.0.0",
+    "tsx": "^3.12.6",
     "typescript": "^5.0.2"
   },
   "dependencies": {

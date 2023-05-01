@@ -1,47 +1,92 @@
 import type { AddressInfo } from 'net';
-import type { UDPServer } from './server';
+import type { Server } from './server';
 
-export class Message<Server extends UDPServer> {
+export class Message {
   #server: Server;
   #info: AddressInfo;
-  room: { name: string; id: string; isGroupChat: boolean };
+  room: {
+    name: string;
+    id: string;
+    isGroupChat: boolean;
+    icon: Promise<string>;
+  };
   id: string;
-  sender: string;
+  sender: { name: string; hash: string; profileImage: Promise<string> };
   content: string;
+  containsMention: boolean;
+  time: number;
   app: { packageName: string; userId: number };
 
   constructor(
     server: Server,
     info: AddressInfo,
     data: {
-      room: string;
+      room: { name: string; id: string; isGroupChat: boolean };
+      id: string;
+      sender: { name: string; hash: string };
       content: string;
-      sender: string;
-      isGroupChat: boolean;
-      profileImage: string;
-      packageName: string;
-      userId: number;
-      chatId: string;
-      logId: string;
+      containsMention: boolean;
+      time: number;
+      app: { packageName: string; userId: number };
     },
   ) {
+    const self = this;
+
     this.#server = server;
     this.#info = info;
     this.room = {
-      name: data.room,
-      id: data.chatId,
-      isGroupChat: data.isGroupChat,
+      name: data.room.name,
+      id: data.room.id,
+      isGroupChat: data.room.isGroupChat,
+      get icon() {
+        return self.#server.getRoomIcon(
+          self.#info,
+          self.app.userId,
+          self.app.packageName,
+          self.room.id,
+        );
+      },
     };
-    this.id = data.logId;
-    this.sender = data.sender;
+    this.id = data.id;
+    this.sender = {
+      name: data.sender.name,
+      hash: data.sender.hash,
+      get profileImage() {
+        return self.#server.getProfileImage(
+          self.#info,
+          self.app.userId,
+          self.app.packageName,
+          self.room.id,
+        );
+      },
+    };
     this.content = data.content;
+    this.containsMention = data.containsMention;
+    this.time = data.time;
     this.app = {
-      packageName: data.packageName,
-      userId: data.userId,
+      packageName: data.app.packageName,
+      userId: data.app.userId,
     };
   }
 
   replyText(text: string, timeout: number = 60000) {
-    return this.#server.sendText(this.#info, this.room.id, text, timeout);
+    return this.#server.sendText(
+      this.#info,
+      this.app.userId,
+      this.app.packageName,
+      this.room.id,
+      text,
+      timeout,
+    );
+  }
+
+  markAsRead(timeout: number = 60000) {
+    return this.#server.markAsRead(
+      this.#info,
+      this.app.userId,
+      this.app.packageName,
+      this.room.id,
+      timeout,
+    );
   }
 }

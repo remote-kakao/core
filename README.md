@@ -1,17 +1,17 @@
 ![remote-kakao banner](https://raw.githubusercontent.com/remote-kakao/core/main/images/banner.png)
 
-# remote-kakao@2.0.0-alpha.2
+# remote-kakao (alpha)
 
 [Discord Server](https://discord.gg/T9PrmtcR8a)
 
 ## About
 
-remote-kakao is a Node.js module to make unofficial KakaoTalk bots by bridging [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) and Node.js, using UDP or TCP.
+remote-kakao is a Node.js module that makes it easier to create unofficial KakaoTalk bots by bridging [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) and Node.js, over UDP or TCP.
 
 ## Requirements
 
-- Node.js v18+ (Recommended)
-- Android smartphone w/ [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) & [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot)
+- Node.js
+- Android smartphone with [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) & [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) installed
 
 ## Example
 
