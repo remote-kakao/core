@@ -6,6 +6,7 @@ import { randomUUID } from 'node:crypto';
 import { Events, Message, RKPlugin } from '..';
 import RKError from '../error';
 import { readyLog, rkColor, rkLog } from '../logger';
+import { Config } from '../types';
 
 export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) {
   #socket: Socket;
@@ -26,8 +27,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
   public usePlugin<
     T extends new (
       server: UDPServer,
-      // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-      config?: Record<string, any> | undefined,
+      config?: Config,
     ) => RKPlugin,
   >(
     Plugin: T,
@@ -39,8 +39,8 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     if (plugin.extendServerClass) plugin.extendServerClass(this);
     if (plugin.onReady) this.on('ready', plugin.onReady);
     if (plugin.onMessage)
-      this.on('message', (message: Message) => {
-        if (plugin.extendMessageClass) plugin.extendMessageClass(message);
+      this.on('message', async (message: Message) => {
+        if (plugin.extendMessageClass) await plugin.extendMessageClass(message);
         if (plugin.onMessage) plugin.onMessage(message);
       });
 
@@ -64,7 +64,6 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
       }
       switch (event) {
         case 'message':
-          console.log(data);
           this.emit('message', new Message(this, remoteInfo, data));
           break;
       }

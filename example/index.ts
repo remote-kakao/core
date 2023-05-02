@@ -1,5 +1,5 @@
-import { UDPServer } from '../src';
-import { MessageLoggerPlugin } from '../src/plugins/MessageLoggerPlugin';
+import { UDPServer } from '../dist';
+import MessageLoggerPlugin from '../dist/plugins/MessageLoggerPlugin';
 import path from 'node:path';
 
 const prefix = '>';

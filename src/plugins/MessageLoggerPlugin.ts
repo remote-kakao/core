@@ -1,18 +1,18 @@
-import { Server, Message, RKPlugin } from '..';
+import { Message, RKPlugin, UDPServer } from '..';
 import fs from 'node:fs';
 
 export class MessageLoggerPlugin extends RKPlugin {
   config: { logFilePath?: string; enableAppInfo?: boolean };
 
   constructor(
-    server: Server,
+    server: UDPServer,
     config?: { logFilePath?: string; enableAppInfo?: boolean },
   ) {
     super(server, config);
     this.config = config ?? {};
   }
 
-  onMessage = async (msg: Message) => {
+  async onMessage(msg: Message) {
     const content = `${msg.sender.name}${
       this.config.enableAppInfo
         ? ` (${msg.app.userId}:${msg.app.packageName})`
@@ -21,5 +21,5 @@ export class MessageLoggerPlugin extends RKPlugin {
     this.log(content);
     if (this.config.logFilePath)
       fs.appendFileSync(this.config.logFilePath, content + '\n', 'utf-8');
-  };
+  }
 }

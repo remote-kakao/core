@@ -1,23 +1,20 @@
-import { Message, Server, rkPluginLog } from '.';
+import { Message, UDPServer, rkPluginLog } from '.';
+import { Config } from './types';
 
 export abstract class RKPlugin {
-  public server: Server;
-  // rome-ignore lint/suspicious/noExplicitAny:
-  public config?: Record<string, any>;
-  // rome-ignore lint/suspicious/noExplicitAny:
-  public log: (text: any) => void;
+  server: UDPServer;
+  config?: Config;
+  log: (text: any) => void;
 
-  // rome-ignore lint/suspicious/noExplicitAny:
-  constructor(server: Server, config?: Record<string, any>) {
+  constructor(server: UDPServer, config?: Config) {
     this.server = server;
     this.config = config;
-    // rome-ignore lint/suspicious/noExplicitAny:
     this.log = (text: any) => {
       rkPluginLog(this.constructor.name, text.toString());
     };
   }
 
-  extendServerClass?(server: Server) {
+  extendServerClass?(server: UDPServer): Promise<UDPServer> | UDPServer {
     return server;
   }
   extendMessageClass?(message: Message): Promise<Message> | Message {

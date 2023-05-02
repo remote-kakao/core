@@ -1,8 +1,8 @@
 import type { AddressInfo } from 'net';
-import type { Server } from './server';
+import type { UDPServer } from './server';
 
 export class Message {
-  #server: Server;
+  #server: UDPServer;
   #info: AddressInfo;
   room: {
     name: string;
@@ -18,7 +18,7 @@ export class Message {
   app: { packageName: string; userId: number };
 
   constructor(
-    server: Server,
+    server: UDPServer,
     info: AddressInfo,
     data: {
       room: { name: string; id: string; isGroupChat: boolean };
