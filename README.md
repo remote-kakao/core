@@ -48,3 +48,5 @@ server.start();
 ## Plugins
 
 <!-- [@remote-kakao/kakaolink-plugin](https://github.com/remote-kakao/kakaolink-plugin) -->
+
+[@remote-kakao/rkeval-plugin](https://github.com/remote-kakao/rkeval-plugin)
