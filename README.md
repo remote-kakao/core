@@ -23,11 +23,7 @@ You have to create a new bot in MessengerBot, and paste [the client code](https:
 import { UDPServer } from "@remote-kakao/core";
 
 const prefix = ">";
-const server = new UDPServer();
-
-server.once("ready", (port) => {
-  console.log(`Server ready on port ${port}!`);
-});
+const server = new UDPServer({ serviceName: "Example Service" });
 
 server.on("chat", async (msg) => {
   if (!msg.content.startsWith(prefix)) return;
