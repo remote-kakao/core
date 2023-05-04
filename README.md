@@ -15,7 +15,7 @@ remote-kakao is a Node.js module that makes it easier to create unofficial Kakao
 
 ## Client
 
-You have to create a new bot in MessengerBot, and paste [the client code](https://github.com/remote-kakao/core-client) into the new bot\`s code. Then change the values of the `config` object on top of the file.
+You have to create a new bot in MessengerBot, and paste [the client code](https://github.com/remote-kakao/core-client/releases/tag/2.0.0-alpha.3) into the new bot\`s code. Then change the values of the `config` object on top of the file.
 
 ## Example
 
