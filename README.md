@@ -25,7 +25,7 @@ import { UDPServer } from "@remote-kakao/core";
 const prefix = ">";
 const server = new UDPServer({ serviceName: "Example Service" });
 
-server.on("chat", async (msg) => {
+server.on("message", async (msg) => {
   if (!msg.content.startsWith(prefix)) return;
 
   const args = msg.content.split(" ");
