@@ -6,7 +6,7 @@ import { randomUUID } from 'node:crypto';
 import { Events, Message, RKPlugin } from '..';
 import RKError from '../error';
 import { readyLog, rkColor, rkLog } from '../logger';
-import { Config } from '../types';
+import { Config, Data } from '../types';
 
 export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) {
   #socket: Socket;
@@ -77,6 +77,39 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     this.emit('ready', port);
   }
 
+  async sendEvent<T>(
+    info: AddressInfo,
+    event: string,
+    data: Data,
+    timeout: number = 60000,
+  ) {
+    return new Promise<T>((res) => {
+      const session = randomUUID();
+      const encodedData = encodeURIComponent(
+        JSON.stringify({ event, session, data }),
+      );
+
+      const t = setTimeout(() => {
+        throw new RKError(RKError.TIMEOUT);
+      }, timeout);
+
+      const handler = (success: T) => {
+        res(success);
+        clearTimeout(t);
+        this.#sessionEmitter.off(session, handler);
+      };
+
+      this.#sessionEmitter.on(session, handler);
+      this.#socket.send(
+        encodedData,
+        0,
+        encodedData.length,
+        info.port,
+        info.address,
+      );
+    });
+  }
+
   async sendText(
     info: AddressInfo,
     userId: number,
@@ -85,29 +118,12 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     text: string,
     timeout: number = 60000,
   ) {
-    return new Promise<boolean>((res) => {
-      const session = randomUUID();
-      const data = encodeURIComponent(
-        JSON.stringify({
-          event: 'send_text',
-          session,
-          data: { userId, packageName, roomId, text },
-        }),
-      );
-
-      const t = setTimeout(() => {
-        throw new RKError(RKError.TIMEOUT);
-      }, timeout);
-
-      const handler = (success: boolean) => {
-        res(success);
-        clearTimeout(t);
-        this.#sessionEmitter.off(session, handler);
-      };
-
-      this.#sessionEmitter.on(session, handler);
-      this.#socket.send(data, 0, data.length, info.port, info.address);
-    });
+    return this.sendEvent<boolean>(
+      info,
+      'send_text',
+      { userId, packageName, roomId, text },
+      timeout,
+    );
   }
 
   async markAsRead(
@@ -117,29 +133,12 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     roomId: string,
     timeout: number = 60000,
   ) {
-    return new Promise<boolean>((res) => {
-      const session = randomUUID();
-      const data = encodeURIComponent(
-        JSON.stringify({
-          event: 'read',
-          session,
-          data: { userId, packageName, roomId },
-        }),
-      );
-
-      const t = setTimeout(() => {
-        throw new RKError(RKError.TIMEOUT);
-      }, timeout);
-
-      const handler = (success: boolean) => {
-        res(success);
-        clearTimeout(t);
-        this.#sessionEmitter.off(session, handler);
-      };
-
-      this.#sessionEmitter.on(session, handler);
-      this.#socket.send(data, 0, data.length, info.port, info.address);
-    });
+    return this.sendEvent<boolean>(
+      info,
+      'read',
+      { userId, packageName, roomId },
+      timeout,
+    );
   }
 
   async getProfileImage(
@@ -148,28 +147,10 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     packageName: string,
     userHash: string,
   ) {
-    return new Promise<string>((res) => {
-      const session = randomUUID();
-      const data = encodeURIComponent(
-        JSON.stringify({
-          event: 'get_profile_image',
-          session,
-          data: { userId, packageName, userHash },
-        }),
-      );
-
-      const t = setTimeout(() => {
-        throw new RKError(RKError.TIMEOUT);
-      }, 60000);
-
-      const handler = (profileImage: string) => {
-        res(profileImage);
-        clearTimeout(t);
-        this.#sessionEmitter.off(session, handler);
-      };
-
-      this.#sessionEmitter.on(session, handler);
-      this.#socket.send(data, 0, data.length, info.port, info.address);
+    return this.sendEvent<string>(info, 'get_profile_image', {
+      userId,
+      packageName,
+      userHash,
     });
   }
 
@@ -179,28 +160,10 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     packageName: string,
     roomId: string,
   ) {
-    return new Promise<string>((res) => {
-      const session = randomUUID();
-      const data = encodeURIComponent(
-        JSON.stringify({
-          event: 'get_room_icon',
-          session,
-          data: { userId, packageName, roomId },
-        }),
-      );
-
-      const t = setTimeout(() => {
-        throw new RKError(RKError.TIMEOUT);
-      }, 60000);
-
-      const handler = (icon: string) => {
-        res(icon);
-        clearTimeout(t);
-        this.#sessionEmitter.off(session, handler);
-      };
-
-      this.#sessionEmitter.on(session, handler);
-      this.#socket.send(data, 0, data.length, info.port, info.address);
+    return this.sendEvent<string>(info, 'get_room_icon', {
+      userId,
+      packageName,
+      roomId,
     });
   }
 }

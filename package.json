@@ -27,7 +27,6 @@
     "example": "tsx --watch example/index.ts",
     "prepublishOnly": "$npm_execpath run build"
   },
-  "keywords": [],
   "author": "thoratica <me@tica.fun>",
   "license": "MIT",
   "devDependencies": {

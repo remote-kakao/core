@@ -3,7 +3,7 @@ import type { UDPServer } from './server';
 
 export class Message {
   #server: UDPServer;
-  #info: AddressInfo;
+  address: AddressInfo;
   room: {
     name: string;
     id: string;
@@ -33,14 +33,14 @@ export class Message {
     const self = this;
 
     this.#server = server;
-    this.#info = info;
+    this.address = info;
     this.room = {
       name: data.room.name,
       id: data.room.id,
       isGroupChat: data.room.isGroupChat,
       get icon() {
         return self.#server.getRoomIcon(
-          self.#info,
+          self.address,
           self.app.userId,
           self.app.packageName,
           self.room.id,
@@ -53,7 +53,7 @@ export class Message {
       hash: data.sender.hash,
       get profileImage() {
         return self.#server.getProfileImage(
-          self.#info,
+          self.address,
           self.app.userId,
           self.app.packageName,
           self.room.id,
@@ -71,7 +71,7 @@ export class Message {
 
   replyText(text: string, timeout: number = 60000) {
     return this.#server.sendText(
-      this.#info,
+      this.address,
       this.app.userId,
       this.app.packageName,
       this.room.id,
@@ -82,7 +82,7 @@ export class Message {
 
   markAsRead(timeout: number = 60000) {
     return this.#server.markAsRead(
-      this.#info,
+      this.address,
       this.app.userId,
       this.app.packageName,
       this.room.id,
