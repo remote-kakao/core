@@ -6,12 +6,16 @@
 
 ## About
 
-remote-kakao is a Node.js module that makes it easier to create unofficial KakaoTalk bots by bridging [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) and Node.js, over UDP or TCP.
+remote-kakao is a Node.js module that makes it easier to create unofficial KakaoTalk bots by bridging [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) and Node.js, over UDP.
 
 ## Requirements
 
 - Node.js
 - Android smartphone with [KakaoTalk](https://play.google.com/store/apps/details?id=com.kakao.talk) & [MessengerBot](https://play.google.com/store/apps/details?id=com.xfl.msgbot) installed
+
+## Client
+
+You have to create a new bot in MessengerBot, and paste [the client code](https://github.com/remote-kakao/core-client) into the new bot\`s code. Then change the values of the `config` object on top of the file.
 
 ## Example
 
