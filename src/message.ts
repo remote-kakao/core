@@ -69,7 +69,7 @@ export class Message {
     };
   }
 
-  replyText(text: string, timeout: number = 60000) {
+  replyText(text: string, timeout = 60000) {
     return this.#server.sendText(
       this.address,
       this.app.userId,
@@ -80,7 +80,7 @@ export class Message {
     );
   }
 
-  markAsRead(timeout: number = 60000) {
+  markAsRead(timeout = 60000) {
     return this.#server.markAsRead(
       this.address,
       this.app.userId,

@@ -18,6 +18,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     socketType = 'udp4',
     serviceName,
   }: { socketType?: SocketType; serviceName?: string } = {}) {
+    // rome-ignore lint/correctness/noInvalidConstructorSuper:
     super();
     this.#socket = createSocket(socketType);
     this.#sessionEmitter = new EventEmitter();
@@ -29,11 +30,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
       server: UDPServer,
       config?: Config,
     ) => RKPlugin,
-  >(
-    Plugin: T,
-    pluginOptions?: ConstructorParameters<T>[1],
-    enableLog: boolean = true,
-  ) {
+  >(Plugin: T, pluginOptions?: ConstructorParameters<T>[1], enableLog = true) {
     const plugin = new Plugin(this, pluginOptions);
 
     if (plugin.extendServerClass) plugin.extendServerClass(this);
@@ -51,11 +48,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     return plugin;
   }
 
-  async start(
-    port: number = 3000,
-    address?: string,
-    enableLog: boolean = true,
-  ) {
+  async start(port = 3000, address?: string, enableLog = true) {
     this.#socket.on('message', (msg, remoteInfo) => {
       const { event, data } = JSON.parse(msg.toString('utf-8'));
 
@@ -81,7 +74,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     info: AddressInfo,
     event: string,
     data: Data,
-    timeout: number = 60000,
+    timeout = 60000,
   ) {
     return new Promise<T>((res) => {
       const session = randomUUID();
@@ -116,7 +109,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     packageName: string,
     roomId: string,
     text: string,
-    timeout: number = 60000,
+    timeout = 60000,
   ) {
     return this.sendEvent<boolean>(
       info,
@@ -131,7 +124,7 @@ export class UDPServer extends (EventEmitter as new () => TypedEmitter<Events>) 
     userId: number,
     packageName: string,
     roomId: string,
-    timeout: number = 60000,
+    timeout = 60000,
   ) {
     return this.sendEvent<boolean>(
       info,
