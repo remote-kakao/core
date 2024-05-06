@@ -1,6 +1,6 @@
 import type { Adapter, Addr } from './adapter.d.ts';
 import { RKError } from './error.ts';
-import EventEmitter from './event-emitter.ts';
+import { EventEmitter } from './event-emitter.ts';
 import { Message } from './message.ts';
 
 type Events<A extends Addr, R extends Addr> = {

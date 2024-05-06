@@ -1,4 +1,4 @@
-import type EventEmitter from './event-emitter.ts';
+import type { EventEmitter } from './event-emitter.ts';
 
 export type Addr = Record<string, any>;
 

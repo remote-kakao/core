@@ -1,5 +1,7 @@
 // deno-lint-ignore no-explicit-any
-class EventEmitter<Events extends Record<string, (...args: any[]) => void>> {
+export class EventEmitter<
+  Events extends Record<string, (...args: any[]) => void>,
+> {
   #events = new Map<keyof Events, Events[keyof Events][]>();
 
   on<E extends keyof Events>(event: E, listener: Events[E]): this {
@@ -43,5 +45,3 @@ class EventEmitter<Events extends Record<string, (...args: any[]) => void>> {
     return this;
   }
 }
-
-export default EventEmitter;
