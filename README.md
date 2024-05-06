@@ -1,3 +1,6 @@
+> [!NOTE]
+> A new version of remote-kakao is actively in development in branch [next](https://github.com/remote-kakao/core/tree/next).
+
 ![remote-kakao banner](https://raw.githubusercontent.com/remote-kakao/core/main/images/banner.png)
 
 # remote-kakao (alpha)
