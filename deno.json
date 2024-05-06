@@ -1,0 +1,12 @@
+{
+  "lock": false,
+  "tasks": {
+    "dev": "deno run -A --unstable-net --watch examples/deno.ts"
+  },
+  "lint": {
+    "rules": {
+      "exclude": ["ban-ts-comment", "no-explicit-any"]
+    }
+  },
+  "importMap": "import-map.json"
+}
