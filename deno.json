@@ -7,6 +7,5 @@
     "rules": {
       "exclude": ["ban-ts-comment", "no-explicit-any"]
     }
-  },
-  "importMap": "import-map.json"
+  }
 }
