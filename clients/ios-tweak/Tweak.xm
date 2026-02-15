@@ -3,13 +3,49 @@
 // %hook UILabel
 
 // - (void)setTextColor:(UIColor *)color {
-// 	%orig([UIColor redColor]);
+//   %orig([UIColor redColor]);
 // }
 
 // %end
 
+__attribute__((visibility("hidden")))
+@interface RKFLEX : NSObject {
+@private
+}
+@end
+
+@implementation RKFLEX
+
++ (instancetype)sharedInstance {
+  static RKFLEX *instance;
+  static dispatch_once_t onceToken;
+
+  dispatch_once(&onceToken, ^{
+    instance = [[self alloc] init];
+  });
+  return instance;
+}
+
+- (id)init {
+  self = [super init];
+  return self;
+}
+
+- (void)inject {
+  [[%c(FLEXManager) performSelector:@selector(sharedManager)] performSelector:@selector(showExplorer)];
+  NSLog(@"remote-kakao: injected FLEX");
+}
+
+@end
+
+
 %ctor {
-	NSLog(@"remote-kakao: loaded");
+  NSLog(@"remote-kakao: loaded");
+  [[NSNotificationCenter defaultCenter]
+    addObserver:[RKFLEX sharedInstance]
+       selector:@selector(inject)
+           name:UIApplicationDidBecomeActiveNotification
+         object:nil];
 }
 
 /* How to Hook with Logos
@@ -21,26 +57,26 @@ the generation of a class list and an automatic constructor.
 
 // Hooking a class method
 + (id)sharedInstance {
-	return %orig;
+  return %orig;
 }
 
 // Hooking an instance method with an argument.
 - (void)messageName:(int)argument {
-	%log; // Write a message about this call, including its class, name and arguments, to the system log.
+  %log; // Write a message about this call, including its class, name and arguments, to the system log.
 
-	%orig; // Call through to the original function with its original arguments.
-	%orig(nil); // Call through to the original function with a custom argument.
+  %orig; // Call through to the original function with its original arguments.
+  %orig(nil); // Call through to the original function with a custom argument.
 
-	// If you use %orig(), you MUST supply all arguments (except for self and _cmd, the automatically generated ones.)
+  // If you use %orig(), you MUST supply all arguments (except for self and _cmd, the automatically generated ones.)
 }
 
 // Hooking an instance method with no arguments.
 - (id)noArguments {
-	%log;
-	id awesome = %orig;
-	[awesome doSomethingElse];
+  %log;
+  id awesome = %orig;
+  [awesome doSomethingElse];
 
-	return awesome;
+  return awesome;
 }
 
 // Always make sure you clean up after yourself; Not doing so could have grave consequences!

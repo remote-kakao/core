@@ -1,0 +1,3 @@
+[submodule "clients/ios-tweak/tweaks/FLEXing"]
+	path = clients/ios-tweak/tweaks/FLEXing
+	url = https://github.com/PoomSmart/FLEXing.git
